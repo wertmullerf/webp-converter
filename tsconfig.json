@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Transpila a ECMAScript 6
+    "module": "commonjs", // Compatible con Node.js
+    "outDir": "./dist", // Carpeta donde se generará el código compilado
+    "rootDir": "./src", // Carpeta donde está tu código fuente
+    "strict": true, // Habilita estrictas comprobaciones de TypeScript
+    "esModuleInterop": true, // Permite la interoperabilidad con módulos CommonJS y ES
+    "forceConsistentCasingInFileNames": true, // Evita inconsistencias en nombres de archivo
+    "skipLibCheck": true // Omite la comprobación de tipos en archivos de declaración
+  },
+  "include": ["src"], // Incluye todos los archivos de la carpeta "src"
+  "exclude": ["node_modules"] // Excluye la carpeta "node_modules"
+}

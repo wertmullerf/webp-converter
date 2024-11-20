@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convertidor a WebP</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <section class="app">
+      <h1>Sube tus imágenes</h1>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="images">Subir imágenes:</label>
+        <input
+          type="file"
+          id="images"
+          name="images"
+          multiple
+          accept=".jpg,.jpeg,.png,.gif"
+        />
+        <button type="submit">Convertir a WebP</button>
+      </form>
+
+      <div id="downloadLinks"></div>
+      <button id="downloadAll" style="display: none">
+        Descargar todo como ZIP
+      </button>
+
+      <div class="message" id="message"></div>
+    </section>
+
+    <script>
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const formData = new FormData();
+          const files = document.getElementById("images").files;
+
+          for (let file of files) {
+            formData.append("images", file);
+          }
+
+          try {
+            const response = await fetch("/upload", {
+              method: "POST",
+              body: formData,
+            });
+            console.log("response", response);
+            if (!response.ok) {
+              throw new Error("Error al convertir las imágenes.");
+            }
+            const data = await response.json();
+            console.log(data);
+            // Mostrar enlaces para las imágenes individuales
+            const linksContainer = document.getElementById("downloadLinks");
+            linksContainer.innerHTML = "";
+            data.urls.forEach((url) => {
+              const link = document.createElement("a");
+              link.href = url;
+              link.textContent = `Descargar ${url.split("/").pop()}`;
+              link.download = "";
+              link.style.display = "block";
+              linksContainer.appendChild(link);
+            });
+
+            // Mostrar botón para descargar todo como ZIP
+            const zipButton = document.getElementById("downloadAll");
+            zipButton.style.display = "block";
+            zipButton.onclick = () => {
+              window.location.href = "/download-zip";
+            };
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+    </script>
+  </body>
+</html>

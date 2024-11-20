@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+form {
+  margin-bottom: 20px;
+}
+input[type="file"] {
+  margin-bottom: 10px;
+}
+.message {
+  margin-top: 20px;
+  color: green;
+  font-weight: bold;
+}
+.error {
+  color: red;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
